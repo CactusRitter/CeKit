@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Textos comunes de las apps Ce (de, «du»). Mismas claves en values-es y values-de. -->
+    <string name="accent_indigo">Indigo</string>
+    <string name="accent_violet">Violett</string>
+    <string name="accent_blue">Blau</string>
+    <string name="accent_green">Grün</string>
+    <string name="accent_coral">Rost</string>
+    <string name="accent_amber">Ocker</string>
+    <string name="accent_teal">Petrol</string>
+    <string name="accent_pink">Himbeere</string>
+    <string name="skin_glass">Glas</string>
+    <string name="skin_modern">Modern</string>
+    <string name="skin_paper">Papier</string>
+    <string name="skin_brutal">Brutalist</string>
+    <string name="style_classic">Klassisch</string>
+    <string name="style_neutral">Neutral</string>
+    <string name="style_aurora">Polarlicht</string>
+    <string name="style_sunset">Sonnenuntergang</string>
+    <string name="style_ocean">Ozean</string>
+    <string name="style_neon">Neon</string>
 </resources>

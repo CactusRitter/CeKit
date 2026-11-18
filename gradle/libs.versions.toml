@@ -4,6 +4,7 @@ agp = "9.5.1"
 kotlin = "2.4.21"
 coreKtx = "1.19.1"
 composeBom = "2026.09.00"
+materialIconsCore = "1.7.8"
 haze = "2.0.1"
 junit = "4.13.2"
 
@@ -15,6 +16,7 @@ androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graph
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "materialIconsCore" }
 haze = { group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
 haze-blur = { group = "dev.chrisbanes.haze", name = "haze-blur", version.ref = "haze" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

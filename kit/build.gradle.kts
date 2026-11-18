@@ -29,6 +29,7 @@ dependencies {
     api(kitLibs.androidx.compose.ui.graphics)
     api(kitLibs.androidx.compose.foundation)
     api(kitLibs.androidx.compose.material3)
+    api(kitLibs.androidx.material.icons.core)
     api(kitLibs.haze)
     api(kitLibs.haze.blur)
     implementation(kitLibs.androidx.core.ktx)
