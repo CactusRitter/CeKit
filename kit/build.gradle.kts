@@ -33,7 +33,18 @@ dependencies {
     api(kitLibs.haze)
     api(kitLibs.haze.blur)
     implementation(kitLibs.androidx.core.ktx)
+    api(kitLibs.androidx.activity.compose)
     implementation(kitLibs.androidx.compose.ui.tooling.preview)
 
     testImplementation(kitLibs.junit)
+}
+
+kotlin {
+    compilerOptions {
+        optIn.addAll(
+            "androidx.compose.material3.ExperimentalMaterial3Api",
+            "androidx.compose.foundation.ExperimentalFoundationApi",
+            "androidx.compose.foundation.layout.ExperimentalLayoutApi",
+        )
+    }
 }

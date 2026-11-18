@@ -19,4 +19,11 @@
     <string name="style_sunset">Sonnenuntergang</string>
     <string name="style_ocean">Ozean</string>
     <string name="style_neon">Neon</string>
+    <string name="action_close">Schließen</string>
+    <string name="action_expand">Erweitern</string>
+    <string name="action_collapse">Einklappen</string>
+    <string name="sheet_drag_handle">Ziehpunkt</string>
+    <string name="action_decrease">Weniger</string>
+    <string name="action_increase">Mehr</string>
+    <string name="action_cancel">Abbrechen</string>
 </resources>

@@ -19,4 +19,11 @@
     <string name="style_sunset">Atardecer</string>
     <string name="style_ocean">Océano</string>
     <string name="style_neon">Neón</string>
+    <string name="action_close">Cerrar</string>
+    <string name="action_expand">Desplegar</string>
+    <string name="action_collapse">Contraer</string>
+    <string name="sheet_drag_handle">Controlador de arrastre</string>
+    <string name="action_decrease">Menos</string>
+    <string name="action_increase">Más</string>
+    <string name="action_cancel">Cancelar</string>
 </resources>
