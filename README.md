@@ -1,0 +1,12 @@
+# CeKit
+
+Módulos comunes de las apps Ce (Cemail, Cenotes, Celander): cristal (`ui/glass`), tema, etc. Paquete `com.ce.kit`.
+
+## Enganchar a una app
+```
+git submodule add https://github.com/CactusRitter/CeKit.git CeKit
+```
+En `settings.gradle.kts` de la app: `apply(from = "CeKit/ce-kit-settings.gradle.kts")`.
+En `app/build.gradle.kts`: `implementation(project(":kit"))`.
+Los textos comunes viven en `kit/src/main/res/values{,-es,-de}` (alemán con «du»); no se duplican en la app.
+Regla: lo común nuevo se escribe aquí, nunca en una app. Plan: `docs/CEKIT-PLAN.md` del repo Ce.
