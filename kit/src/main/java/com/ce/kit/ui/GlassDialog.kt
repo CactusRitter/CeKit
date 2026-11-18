@@ -90,7 +90,7 @@ fun GlassDialog(
             ) {
                 Column(Modifier.padding(start = 24.dp, end = 16.dp, top = 24.dp, bottom = 12.dp)) {
                     Text(title, style = MaterialTheme.typography.titleLarge, color = colors.onSurface, modifier = Modifier.padding(end = 8.dp))
-                    Text(
+                    if (message.isNotEmpty()) Text(
                         message,
                         style = MaterialTheme.typography.bodyMedium,
                         color = colors.onSurfaceVariant,
