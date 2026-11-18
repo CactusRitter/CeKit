@@ -22,7 +22,8 @@ object CeKit {
     /** Versión del kit (sube al cambiar algo que las apps deban notar). */
     const val VERSION = "0.2.0"
 
-    lateinit var config: CeAppConfig
+    /** Identity of the running app; a neutral placeholder until [init] runs (unit tests never call it). */
+    var config: CeAppConfig = CeAppConfig("Ce", "0", 0, "")
         private set
 
     private lateinit var appContext: Context
