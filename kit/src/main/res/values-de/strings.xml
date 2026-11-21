@@ -45,7 +45,7 @@
     <string name="settings_transparency_body">Wie durchsichtig Karten und Leisten sind.</string>
     <string name="settings_version">Version %1$s</string>
     <string name="settings_updates_title">Nach neuen Versionen suchen</string>
-    <string name="settings_updates_body">Ein- bis zweimal am Tag fragt %1 bei GitHub, wo die Versionen veröffentlicht werden, ob es eine neuere gibt, und zeigt das oben auf dem Bildschirm an. GitHub sieht nur die Adresse deiner Verbindung, nichts über dich oder deine Daten.</string>
+    <string name="settings_updates_body">Ein- bis zweimal am Tag fragt %1$s bei GitHub, wo die Versionen veröffentlicht werden, ob es eine neuere gibt, und zeigt das oben auf dem Bildschirm an. GitHub sieht nur die Adresse deiner Verbindung, nichts über dich oder deine Daten.</string>
     <string name="settings_updates_now">Jetzt suchen</string>
     <string name="whatsnew_current">Neu in %1$s</string>
     <string name="whatsnew_next">Kommt in %1$s</string>
