@@ -253,7 +253,7 @@ fun glassColors(
         card = card.copy(alpha = cardAlpha),
         chrome = card.copy(alpha = cardAlpha),
         pinned = pinned.copy(alpha = GlassTokens.pinnedAlpha(t, dark, blur)),
-        menu = menu.copy(alpha = GlassTokens.sheetFillAlpha(t, dark, blur)),
+        menu = menu.copy(alpha = GlassTokens.menuAlpha(t, dark, blur)),
         base = Color(look.base),
         borderTop = Color.White.copy(alpha = if (dark) 0.16f else 0.85f),
         borderBottom = Color.White.copy(alpha = if (dark) 0.04f else 0.25f),

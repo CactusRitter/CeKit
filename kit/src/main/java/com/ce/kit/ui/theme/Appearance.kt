@@ -5,6 +5,8 @@ package com.ce.kit.ui.theme
  * so the theme does not depend on any app.
  */
 interface CeAppearance {
+    val accent: Accent
+    val customHue: Float?
     val themeMode: ThemeMode
     val themeStyle: ThemeStyle
     val skin: Skin
@@ -18,6 +20,8 @@ interface CeAppearance {
 
 /** The defaults of every Ce app (used by previews and as the starting point). */
 object DefaultAppearance : CeAppearance {
+    override val accent = Accent.INDIGO
+    override val customHue: Float? = null
     override val themeMode = ThemeMode.SYSTEM
     override val themeStyle = ThemeStyle.AURORA
     override val skin = Skin.GLASS

@@ -28,6 +28,12 @@ import com.ce.kit.ui.theme.CeTheme
  */
 @Composable
 fun GlassSwitch(checked: Boolean, onCheckedChange: ((Boolean) -> Unit)?, modifier: Modifier = Modifier) {
+    // Retro 98 has no switches: the same control is a bevelled check box there (TaskCheckbox draws it; other looks keep the switch).
+    TaskCheckbox(checked, onCheckedChange, modifier) { GlassSwitchTrack(checked, onCheckedChange, modifier) }
+}
+
+@Composable
+private fun GlassSwitchTrack(checked: Boolean, onCheckedChange: ((Boolean) -> Unit)?, modifier: Modifier) {
     val c = MaterialTheme.colorScheme
     val track by animateColorAsState(if (checked) c.primary else c.surfaceVariant.copy(alpha = 0.6f), glassSpring(), label = "track")
     val knob by animateColorAsState(if (checked) c.onPrimary else c.outline, glassSpring(), label = "knob")

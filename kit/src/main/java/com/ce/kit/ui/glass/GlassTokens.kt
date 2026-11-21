@@ -48,6 +48,15 @@ object GlassTokens {
     }
 
     /**
+     * Floating menus, popups and snackbars sit over text that cannot be blurred (a web view, a popup window), so they never
+     * get clearer than [MENU_MIN_ALPHA]: the sheet curve, with that floor.
+     */
+    fun menuAlpha(transparency: Float, dark: Boolean, blurActive: Boolean): Float =
+        maxOf(sheetFillAlpha(transparency, dark, blurActive), MENU_MIN_ALPHA)
+
+    const val MENU_MIN_ALPHA = 0.92f
+
+    /**
      * Opacity of home screen widgets, from their own widget transparency (not the app's glass). They
      * cannot blur the wallpaper; up to the default, secondary text stays at WCAG AA on a black or
      * white wallpaper, at 1 only the glass rim, sheen and shadow remain.
