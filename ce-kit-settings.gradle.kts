@@ -8,3 +8,6 @@ dependencyResolutionManagement {
 }
 include(":kit")
 project(":kit").projectDir = File(kitDir, "kit")
+// Solo para apps con cuentas: en su build.gradle.kts, además de project(":kit"), implementation(project(":kitauth")).
+include(":kitauth")
+project(":kitauth").projectDir = File(kitDir, "auth")

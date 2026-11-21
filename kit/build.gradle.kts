@@ -34,7 +34,6 @@ dependencies {
     api(kitLibs.kotlinx.coroutines.android)
     api(kitLibs.haze)
     api(kitLibs.haze.blur)
-    api(kitLibs.appauth)
     implementation(kitLibs.androidx.core.ktx)
     api(kitLibs.androidx.activity.compose)
     implementation(kitLibs.androidx.compose.ui.tooling.preview)
