@@ -67,7 +67,7 @@ fun GlassOverlayWindow(onDismiss: () -> Unit, scrim: Float = 0.2f, content: @Com
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.scrim.copy(alpha = scrim))
                 .clickable(interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }, indication = null, onClick = onDismiss),
-            content = content,
+            content = { androidx.compose.runtime.CompositionLocalProvider(com.ce.kit.ui.glass.LocalHazeState provides null) { content() } },
         )
     }
 }
