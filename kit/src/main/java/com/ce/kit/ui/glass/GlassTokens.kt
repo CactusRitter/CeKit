@@ -56,6 +56,9 @@ object GlassTokens {
 
     const val MENU_MIN_ALPHA = 1f
 
+    /** The floor for menus, dialogs and notices that sit over a real blur (a snackbar over text must not look see-through). */
+    const val MENU_BLUR_MIN_ALPHA = 0.92f
+
     /**
      * Opacity of home screen widgets, from their own widget transparency (not the app's glass). They
      * cannot blur the wallpaper; up to the default, secondary text stays at WCAG AA on a black or
