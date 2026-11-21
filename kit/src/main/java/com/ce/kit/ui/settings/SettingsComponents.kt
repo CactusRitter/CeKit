@@ -51,7 +51,12 @@ fun SettingsCard(modifier: Modifier = Modifier, content: @Composable ColumnScope
 
 /** A title, a line of explanation and a switch; the whole row is the touch target. */
 @Composable
-fun SwitchRow(title: Int, body: Int, checked: Boolean, onChange: (Boolean) -> Unit) {
+fun SwitchRow(title: Int, body: Int, checked: Boolean, onChange: (Boolean) -> Unit) =
+    SwitchRow(stringResource(title), stringResource(body), checked, onChange)
+
+/** The same with ready texts (for a text that carries the app name). */
+@Composable
+fun SwitchRow(title: String, body: String, checked: Boolean, onChange: (Boolean) -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -62,8 +67,8 @@ fun SwitchRow(title: Int, body: Int, checked: Boolean, onChange: (Boolean) -> Un
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(stringResource(title), style = MaterialTheme.typography.titleSmall)
-            Text(stringResource(body), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(title, style = MaterialTheme.typography.titleSmall)
+            Text(body, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         GlassSwitch(checked = checked, onCheckedChange = null)
     }
