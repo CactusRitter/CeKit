@@ -103,6 +103,8 @@ fun BigRow(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     verticalPadding: Dp = 14.dp,
+    /** Something small after the title (a star for the default account, a badge...). */
+    titleBadge: (@Composable () -> Unit)? = null,
     icon: @Composable () -> Unit,
 ) {
     Row(
@@ -118,7 +120,10 @@ fun BigRow(
     ) {
         icon()
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(title, Modifier.weight(1f, fill = false), style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                titleBadge?.invoke()
+            }
             if (body != null) {
                 Text(body, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
             }
