@@ -110,10 +110,10 @@ fun AccentButton(
         horizontalArrangement = Arrangement.Center,
     ) {
         if (icon != null) {
-            Icon(icon, null, tint = colors.onPrimary, modifier = Modifier.size(CeSizes.iconSmall + 2.dp))
+            Icon(icon, null, tint = if (retro) colors.onSurface else colors.onPrimary, modifier = Modifier.size(CeSizes.iconSmall + 2.dp))
             Box(Modifier.width(8.dp))
         }
-        Text(text, style = MaterialTheme.typography.labelLarge, color = colors.onPrimary, maxLines = 1)
+        Text(text, style = MaterialTheme.typography.labelLarge, color = if (retro) colors.onSurface else colors.onPrimary, maxLines = 1)
     }
 }
 
@@ -213,12 +213,14 @@ fun SegmentedControl(
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
+    val retro = isRetro()
+    val shape = if (retro) RectangleShape else CircleShape
     val motion = LocalMotion.current
     val position by animateFloatAsState(selectedIndex.toFloat(), motion.standard(), label = "segment")
     BoxWithConstraints(
         modifier
             .height(CeSizes.touchTarget)
-            .background(colors.onSurface.copy(alpha = 0.08f), CircleShape),
+            .background(colors.onSurface.copy(alpha = 0.08f), shape),
     ) {
         val segment = maxWidth / options.size
         // Taps count over the control's full height; the pill drawn inside keeps its inset.
@@ -228,9 +230,15 @@ fun SegmentedControl(
                 .width(segment)
                 .fillMaxHeight()
                 .padding(4.dp)
-                .softShadow(CircleShape, LocalGlass.current.shadow, Elevation.lifted)
-                .background(colors.surface, CircleShape)
-                .border(CeSizes.hairline, colors.outlineVariant, CircleShape),
+                .then(
+                    if (retro) {
+                        Modifier.glass(RectangleShape, com.ce.kit.ui.glass.GlassKind.Pinned)
+                    } else {
+                        Modifier.softShadow(shape, LocalGlass.current.shadow, Elevation.lifted)
+                            .background(colors.surface, shape)
+                            .border(CeSizes.hairline, colors.outlineVariant, shape)
+                    },
+                ),
         )
         Row(Modifier.fillMaxSize().selectableGroup()) {
             options.forEachIndexed { index, label ->
@@ -243,7 +251,7 @@ fun SegmentedControl(
                         .fillMaxHeight()
                         .selectable(selected = selected, interactionSource = interactions, indication = null, role = Role.Tab) { onSelect(index) }
                         .padding(4.dp)
-                        .clip(CircleShape)
+                        .clip(shape)
                         .indication(interactions, ripple()),
                     contentAlignment = Alignment.Center,
                 ) {
