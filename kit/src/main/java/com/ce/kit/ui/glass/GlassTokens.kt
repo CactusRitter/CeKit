@@ -54,7 +54,7 @@ object GlassTokens {
     fun menuAlpha(transparency: Float, dark: Boolean, blurActive: Boolean): Float =
         maxOf(sheetFillAlpha(transparency, dark, blurActive), MENU_MIN_ALPHA)
 
-    const val MENU_MIN_ALPHA = 0.97f
+    const val MENU_MIN_ALPHA = 1f
 
     /**
      * Opacity of home screen widgets, from their own widget transparency (not the app's glass). They

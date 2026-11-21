@@ -20,7 +20,7 @@ import com.ce.kit.ui.theme.LocalSkin
 
 /**
  * The menu that opens from a "more" button. A popup window cannot blur what is behind it, so it uses the menu fill
- * (never clearer than [com.ce.kit.ui.glass.GlassTokens.MENU_MIN_ALPHA]) and the corners of the current design
+ * (opaque: MENU_MIN_ALPHA = 1) and the corners of the current design
  * (square in Retro 98), the same in every app.
  */
 @Composable
