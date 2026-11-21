@@ -1,5 +1,7 @@
 package com.ce.kit.ui
 
+import androidx.compose.ui.graphics.RectangleShape
+import com.ce.kit.ui.glass.glass
 import com.ce.kit.ui.rememberHaptics
 import androidx.compose.animation.animateColorAsState
 import com.ce.kit.ui.theme.LocalSkin
@@ -97,11 +99,12 @@ fun AccentButton(
     enabled: Boolean = true,
 ) {
     val colors = MaterialTheme.colorScheme
+    val retro = isRetro()
     Row(
         modifier
-            .springClickable(enabled = enabled, role = Role.Button, shape = CircleShape, onClick = onClick)
+            .springClickable(enabled = enabled, role = Role.Button, shape = if (retro) RectangleShape else CircleShape, onClick = onClick)
             .heightIn(min = CeSizes.touchTarget)
-            .background(if (enabled) colors.primary else colors.outline)
+            .then(if (retro) Modifier.glass(RectangleShape, com.ce.kit.ui.glass.GlassKind.Pinned) else Modifier.background(if (enabled) colors.primary else colors.outline))
             .padding(horizontal = 20.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
@@ -123,11 +126,12 @@ fun SoftButton(
     contentColor: Color = MaterialTheme.colorScheme.primary,
 ) {
     val colors = MaterialTheme.colorScheme
+    val retro = isRetro()
     Row(
         modifier
-            .springClickable(role = Role.Button, shape = CircleShape, onClick = onClick)
+            .springClickable(role = Role.Button, shape = if (retro) RectangleShape else CircleShape, onClick = onClick)
             .heightIn(min = CeSizes.touchTarget)
-            .background(colors.primaryContainer.copy(alpha = if (colors.isDark) 0.9f else 0.85f))
+            .then(if (retro) Modifier.glass(RectangleShape, com.ce.kit.ui.glass.GlassKind.Card) else Modifier.background(colors.primaryContainer.copy(alpha = if (colors.isDark) 0.9f else 0.85f)))
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
@@ -166,13 +170,19 @@ fun SelectableChip(
 ) {
     val colors = MaterialTheme.colorScheme
     val bg by animateColorAsState(if (selected) colors.primaryContainer else colors.surface.copy(alpha = 0.5f), LocalMotion.current.fade(), label = "chipBg")
+    val retro = isRetro()
     Row(
         modifier
             .heightIn(min = 36.dp)
             .minimumInteractiveComponentSize()
-            .clip(CircleShape)
-            .background(bg)
-            .border(CeSizes.hairline, if (selected) colors.primary.copy(alpha = 0.5f) else colors.outline, CircleShape)
+            .then(
+                if (retro) {
+                    Modifier.glass(RectangleShape, if (selected) com.ce.kit.ui.glass.GlassKind.Pinned else com.ce.kit.ui.glass.GlassKind.Card)
+                } else {
+                    Modifier.clip(CircleShape).background(bg)
+                        .border(CeSizes.hairline, if (selected) colors.primary.copy(alpha = 0.5f) else colors.outline, CircleShape)
+                },
+            )
             .selectable(selected = selected, role = role, onClick = onClick)
             .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -272,11 +282,11 @@ fun Stepper(value: Int, onValueChange: (Int) -> Unit, range: IntRange, label: St
 @Composable
 fun RemovableChip(text: String, removeLabel: String, onRemove: () -> Unit, modifier: Modifier = Modifier) {
     val colors = MaterialTheme.colorScheme
+    val retro = isRetro()
     Row(
         modifier
             .heightIn(min = 36.dp)
-            .clip(CircleShape)
-            .background(colors.primaryContainer)
+            .then(if (retro) Modifier.glass(RectangleShape, com.ce.kit.ui.glass.GlassKind.Card) else Modifier.clip(CircleShape).background(colors.primaryContainer))
             .padding(start = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -403,3 +413,7 @@ fun IconRow(
 }
 
 fun Modifier.dimmed(dim: Boolean): Modifier = if (dim) alpha(0.55f) else this
+
+/** Retro 98 draws chips and buttons as straight, bevelled buttons; every other look keeps its round ones. */
+@Composable
+private fun isRetro(): Boolean = com.ce.kit.ui.theme.LocalSkin.current.let { it.skin == com.ce.kit.ui.theme.Skin.RETRO && it.bevel.size >= 4 }
