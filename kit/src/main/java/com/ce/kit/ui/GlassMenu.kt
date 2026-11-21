@@ -1,6 +1,10 @@
 package com.ce.kit.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.remember
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -42,3 +46,30 @@ fun GlassMenuItem(text: String, onClick: () -> Unit, icon: ImageVector? = null, 
         leadingIcon = icon?.let { { Icon(it, null, tint = tint) } },
     )
 }
+
+/**
+ * A full-screen overlay in its own window (a transparent dialog window): menus, grids and panels opened from a button go
+ * here when the screen below has a native view (a WebView paints above Compose layers on some phones). Content is placed
+ * with the BoxScope alignments; a tap outside it calls [onDismiss]. The window dims nothing by itself: [scrim] is the dimming.
+ */
+@Composable
+fun GlassOverlayWindow(onDismiss: () -> Unit, scrim: Float = 0.2f, content: @Composable androidx.compose.foundation.layout.BoxScope.() -> Unit) {
+    androidx.compose.ui.window.Dialog(
+        onDismissRequest = onDismiss,
+        properties = androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false),
+    ) {
+        (androidx.compose.ui.platform.LocalView.current.parent as? androidx.compose.ui.window.DialogWindowProvider)?.window?.apply {
+            setDimAmount(0f)
+            setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
+        }
+        androidx.compose.foundation.layout.Box(
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.scrim.copy(alpha = scrim))
+                .clickable(interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }, indication = null, onClick = onDismiss),
+            content = content,
+        )
+    }
+}
+
+private fun Modifier.fillMaxSize(): Modifier = this.then(Modifier.fillMaxSize())
