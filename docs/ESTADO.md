@@ -13,3 +13,8 @@ Repo: github.com/CactusRitter/CeKit (público). Módulo `:kit`, paquete `com.ce.
 - GlassDialog en tablet (Cenotes: acotado al panel/columna).
 - F4 cuentas/red, F5 resto (firma release en las 3, R8 en Cemail/Cenotes, plantillas CLAUDE.md, test.ps1), F6.
 - Textos de Retro 98 en Celander (editor): interruptor «Todo el día», botón Guardar en blanco, selector Evento/Tarea redondo (de Celander).
+
+## Pasada de controles por temas (2026-11-21)
+Hecho (kit + apps): GlassMenu (⋮), GlassSwitch (casilla en Retro), SoftButton/AccentButton/SelectableChip/RemovableChip/SegmentedControl con rama Retro, GlassDialog, TaskCheckbox. Muestras vistas en emulador: Glass (todas), Retro (Cemail bienvenida, Celander editor, Cenotes ⋮), Paper y Brutalista (Celander editor); Moderno y AMOLED solo compilan.
+Pendiente en el kit (lo detectaron las auditorías): GlassDialog con contenido libre y sin botón de confirmar (listas de opciones, selectores de fecha/lugar, visor de imagen); SoftButton con `enabled`; AccentButton con estado de carga; RemovableChip con estado de error; GlassMenuItem con contenido libre; SelectableChip circular de tamaño fijo (días de la semana de Celander); TaskCheckbox tri-estado; IconButton glass; campo de texto glass (TextField de Cemail); cajón lateral glass; fila de lista clicable. Sin tocar por decisión: IconButton de Material, TextField, ModalNavigationDrawer, filas del cajón.
+Recortes de sombra: causa del punto 5 = AnimatedContent recortando (corregido en Cemail ListScreen, con `SizeTransform(clip=false)`; MailApp y ComposeScreen ya lo tenían). Vigilar: Celander PeriodPager clipToBounds por página (deliberado), Cenotes LinkChip (AnimatedVisibility expand), MailMotion clip en la apertura del correo.
