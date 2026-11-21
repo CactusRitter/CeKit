@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -68,7 +69,13 @@ interface CeAppearanceActions {
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun AppearancePage(settings: CeAppearance, actions: CeAppearanceActions, extra: @Composable () -> Unit = {}) {
+fun AppearancePage(
+    settings: CeAppearance,
+    actions: CeAppearanceActions,
+    extra: @Composable () -> Unit = {},
+    /** The app's own choices inside the style/colour card, between the style and the colour (end it with a divider). */
+    styleExtra: @Composable ColumnScope.() -> Unit = {},
+) {
     val glassLook = settings.skin == Skin.GLASS
     val dark = LocalGlass.current.dark
     SettingsCard {
@@ -109,6 +116,7 @@ fun AppearancePage(settings: CeAppearance, actions: CeAppearanceActions, extra: 
             }
             HorizontalDivider(Modifier.padding(vertical = 4.dp), color = MaterialTheme.colorScheme.outlineVariant)
         }
+        styleExtra()
         Text(stringResource(R.string.accent_title), style = MaterialTheme.typography.titleSmall)
         Text(stringResource(R.string.accent_body), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
