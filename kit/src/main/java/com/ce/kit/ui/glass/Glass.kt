@@ -92,7 +92,9 @@ fun GlassColors.fill(kind: GlassKind, blurred: Boolean): Color {
     val alpha = when (kind) {
         GlassKind.Card, GlassKind.Chrome -> GlassTokens.fillAlpha(transparency, dark, blur)
         GlassKind.Pinned -> GlassTokens.pinnedAlpha(transparency, dark, blur)
-        GlassKind.Menu -> GlassTokens.menuAlpha(transparency, dark, blur)
+        // With a real blur behind (inside the screen) a menu or drawer uses the sheet curve; only without blur (popup windows,
+        // over text that cannot be blurred) does it keep the higher floor.
+        GlassKind.Menu -> if (blur) GlassTokens.sheetFillAlpha(transparency, dark, blur) else GlassTokens.menuAlpha(transparency, dark, blur)
     }
     return solid.copy(alpha = alpha)
 }
