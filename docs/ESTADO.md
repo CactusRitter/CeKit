@@ -25,3 +25,6 @@ Recortes de sombra: causa del punto 5 = AnimatedContent recortando (corregido en
 - F5: hecho release.ps1, test.ps1, plantilla de CLAUDE.md, firma sin caer a debug, tests del kit (cadenas, versiones, notas). R8 probado en ramas `r8-prueba` (Cemail, Cenotes), sin probar IMAP/Gmail/push/OCR/widgets. Tests de migraciones de Cenotes: requieren exportar el esquema de Room (`exportSchema = true` + KSP `room.schemaLocation`) y pruebas instrumentadas (emulador) con datos reales de César: decisión de César.
 - F6 (copia de seguridad común, repositorio de ajustes): sin empezar.
 - Regla aprendida: GlassKind.Menu con blur usa la curva de hojas; sin blur (ventanas emergentes) el suelo 0,97. Todo lo que se abra sobre un WebView va en `GlassOverlayWindow`.
+
+## Pasada de temas: completada con muestras (2026-11-22)
+Moderno y AMOLED vistos en Cemail (Ajustes → Mensajes: interruptores, chips): coherentes. Glass, Retro, Paper, Brutalista vistos antes. Punto 6 (sombras con retraso/recortadas): sin repro en emulador; auditoría estática sin recortes visibles salvo vigilar Celander PeriodPager y Cenotes LinkChip. Avisos/menús/diálogos con blur: opacidad mínima 0,92; sin blur (ventana propia): 1,0.
