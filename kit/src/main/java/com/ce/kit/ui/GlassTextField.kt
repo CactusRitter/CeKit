@@ -55,10 +55,10 @@ fun GlassTextField(
     ) {
         Box(Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
         Column {
-        if (label != null) Text(label, style = MaterialTheme.typography.labelMedium, color = if (isError) colors.error else colors.onSurfaceVariant, maxLines = 1)
+        if (label != null && value.isNotEmpty()) Text(label, style = MaterialTheme.typography.labelMedium, color = if (isError) colors.error else colors.onSurfaceVariant, maxLines = 1)
         Box {
-        if (value.isEmpty() && placeholder != null) {
-            Text(placeholder, style = MaterialTheme.typography.bodyLarge, color = colors.onSurfaceVariant, maxLines = 1)
+        if (value.isEmpty() && (placeholder ?: label) != null) {
+            Text((placeholder ?: label)!!, style = MaterialTheme.typography.bodyLarge, color = colors.onSurfaceVariant, maxLines = 1)
         }
         BasicTextField(
             value = value,
