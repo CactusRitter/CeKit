@@ -52,7 +52,7 @@ if ($build -notmatch 'versionCode\s*=\s*(\d+)') { Fail 'No encuentro versionCode
 $oldCode = [int]$Matches[1]; $newCode = $oldCode + 1
 if ($build -notmatch 'versionName\s*=\s*"([^"]+)"') { Fail 'No encuentro versionName.' }
 $oldName = $Matches[1]
-if ($DryRun -eq $false -and -not (Test-Path (Join-Path $gradleDir 'keystore.properties'))) { Fail 'Falta keystore.properties: no se publica sin la firma de release.' }
+if ($DryRun -eq $false -and -not ((Test-Path (Join-Path $gradleDir "keystore.properties")) -or (Test-Path (Join-Path $gradleDir "keystore\keystore.properties")))) { Fail 'Falta keystore.properties: no se publica sin la firma de release.' }
 Write-Host "  versionName $oldName -> $Version · versionCode $oldCode -> $newCode"
 $drive = "G:\Mi unidad\Ce Apps\$App"
 $apkOut = Join-Path $drive "$App-$Version.apk"
@@ -99,5 +99,7 @@ git commit -m "Version $Version (versionCode $newCode)`n`nCo-Authored-By: Claude
 git push
 $tmpNotes = Join-Path $env:TEMP "$App-$Version-notes.md"
 Set-Content $tmpNotes $notes -Encoding UTF8
-gh release create "v$Version" $apkOut --title "$App $Version" --notes-file $tmpNotes
+$origin = (git remote get-url origin) -replace '^.*github\.com[:/]', '' -replace '\.git$', ''
+gh release create "v$Version" $apkOut --title "$App $Version" --notes-file $tmpNotes -R $origin
+if ($LASTEXITCODE -ne 0) { Fail "gh release create fallo (repo $origin); el APK ya esta en Drive y el commit en GitHub." }
 Write-Host "Publicada $App $Version." -ForegroundColor Green
