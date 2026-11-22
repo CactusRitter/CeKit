@@ -48,10 +48,12 @@ class GoogleAuth(context: Context, private val clientId: String, private val sco
      * Intent that opens Google's sign-in page; deliver the result to [handleResult]. [loginHint] (an address, e.g. an
      * account of a restored backup) makes Google offer that account first.
      */
-    fun signInIntent(loginHint: String? = null): Intent? {
+    fun signInIntent(loginHint: String? = null, extraScope: String? = null): Intent? {
         if (!isConfigured) return null
         val request = AuthorizationRequest.Builder(config, clientId, ResponseTypeValues.CODE, redirectUri)
-            .setScope(scopes)
+            .setScope(if (extraScope == null) scopes else "$scopes $extraScope")
+            // Incremental consent (a new permission asked later): Google keeps what was granted before.
+            .apply { if (extraScope != null) { setPrompt(AuthorizationRequest.Prompt.CONSENT); setAdditionalParameters(mapOf("include_granted_scopes" to "true")) } }
             .setLoginHint(loginHint)
             .build()
         return service.getAuthorizationRequestIntent(request)

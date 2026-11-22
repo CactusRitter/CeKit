@@ -21,6 +21,7 @@ android {
 
 dependencies {
     api(kitLibs.appauth)
+    api(project(":kit"))
     implementation(kitLibs.androidx.core.ktx)
     implementation(kitLibs.kotlinx.coroutines.android)
 
