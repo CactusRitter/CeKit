@@ -24,6 +24,11 @@ class UpdatesLogicTest {
         assertEquals("plain text", ReleaseNotes.forLanguage("plain text", "es"))
     }
 
+    @Test fun aByteOrderMarkDoesNotHideTheFirstVersion() {
+        val text = "﻿## 2.8.0\n- a\n\n## 2.7.0\n- b\n"
+        assertEquals("- a", ReleaseNotes.forVersion(text, "2.8.0"))
+    }
+
     @Test fun bundledChangelogSectionsByVersion() {
         val text = "## 2.7.0\n- a\n- b\n\n## 2.6.1\n- c\n"
         assertEquals("- a\n- b", ReleaseNotes.forVersion(text, "2.7.0"))

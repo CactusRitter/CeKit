@@ -10,7 +10,7 @@ object ReleaseNotes {
         var key: String? = null
         val lines = StringBuilder()
         fun flush() { key?.let { result[it] = lines.toString().trim() }; lines.clear() }
-        for (line in text.lines()) {
+        for (line in text.removePrefix("﻿").lines()) {
             if (line.startsWith("## ")) { flush(); key = line.removePrefix("## ").trim() } else lines.appendLine(line)
         }
         flush()

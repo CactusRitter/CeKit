@@ -26,6 +26,7 @@ param(
     [switch]$DryRun
 )
 $ErrorActionPreference = 'Stop'
+function Set-Utf8 { param($Path, $Text) [IO.File]::WriteAllText($Path, $Text, (New-Object Text.UTF8Encoding $false)) }
 $root = (Get-Location).Path
 function Fail($m) { Write-Error $m; exit 1 }
 function Step($m) { Write-Host "» $m" -ForegroundColor Cyan }
@@ -61,18 +62,18 @@ if ($DryRun) { Write-Host 'DryRun: todo en orden, no se ha cambiado nada.' -Fore
 
 Step 'Subiendo versión'
 $build = $build -replace 'versionCode\s*=\s*\d+', "versionCode = $newCode" -replace 'versionName\s*=\s*"[^"]+"', "versionName = `"$Version`""
-Set-Content $buildFile $build -Encoding UTF8 -NoNewline
+Set-Utf8 $buildFile $build
 
 Step 'CHANGELOG.md y notas de la app'
 $date = Get-Date -Format 'yyyy-MM-dd'
 $cl = [regex]::Replace($cl, '(?m)^## Sin publicar\s*$', "## Sin publicar`r`n`r`n## $Version — $date", 1)
-Set-Content $changelog $cl -Encoding UTF8 -NoNewline
+Set-Utf8 $changelog $cl
 function Section($lang) { if ($notes -match "(?ms)^## $lang\s*\r?\n(?<t>.*?)(?=^## |\z)") { $Matches['t'].Trim() } }
 foreach ($pair in @(@('en', 'raw'), @('es', 'raw-es'), @('de', 'raw-de'))) {
     $file = Join-Path $resDir "$($pair[1])\changelog.txt"
     $old = if (Test-Path $file) { Get-Content $file -Raw -Encoding UTF8 } else { '' }
     New-Item -ItemType Directory -Force (Split-Path $file) | Out-Null
-    Set-Content $file ("## $Version`n$(Section $pair[0])`n`n$old") -Encoding UTF8 -NoNewline
+    Set-Utf8 $file ("## $Version`n$(Section $pair[0])`n`n$old")
 }
 
 Step 'assembleRelease'
@@ -98,7 +99,7 @@ git add -A
 git commit -m "Version $Version (versionCode $newCode)`n`nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>"
 git push
 $tmpNotes = Join-Path $env:TEMP "$App-$Version-notes.md"
-Set-Content $tmpNotes $notes -Encoding UTF8
+Set-Utf8 $tmpNotes $notes
 $origin = (git remote get-url origin) -replace '^.*github\.com[:/]', '' -replace '\.git$', ''
 gh release create "v$Version" $apkOut --title "$App $Version" --notes-file $tmpNotes -R $origin
 if ($LASTEXITCODE -ne 0) { Fail "gh release create fallo (repo $origin); el APK ya esta en Drive y el commit en GitHub." }
