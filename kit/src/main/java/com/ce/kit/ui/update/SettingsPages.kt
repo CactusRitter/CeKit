@@ -4,7 +4,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -66,6 +67,7 @@ fun UpdatesPage(checkUpdates: Boolean, onCheckUpdates: (Boolean) -> Unit, change
 
 /** Settings → Diagnostics: the activity log can always be shared; the last crash shows only if there was one. */
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 fun DiagnosticsPage() {
     val context = LocalContext.current
     var crash by remember { mutableStateOf(CrashLog.read(context)) }
@@ -77,7 +79,7 @@ fun DiagnosticsPage() {
     SettingsCard {
         Text(stringResource(R.string.settings_log_title), style = MaterialTheme.typography.titleSmall)
         Text(stringResource(R.string.settings_log_body), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             val shareTitle = stringResource(R.string.settings_log_share_title)
             ChoiceChip(stringResource(R.string.settings_log_share), false) { AppLog.share(context, shareTitle) }
             ChoiceChip(stringResource(R.string.copy), false) { copy(AppLog.text(context)) }
@@ -92,7 +94,7 @@ fun DiagnosticsPage() {
             Text(stringResource(R.string.settings_crash_title), style = MaterialTheme.typography.titleSmall)
             Text(stringResource(R.string.settings_crash_body), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(text, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 6, overflow = TextOverflow.Ellipsis)
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 ChoiceChip(stringResource(R.string.copy), false) { copy(text) }
                 ChoiceChip(stringResource(R.string.clear), false) {
                     CrashLog.clear(context)
