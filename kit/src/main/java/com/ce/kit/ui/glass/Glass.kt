@@ -320,12 +320,14 @@ fun GlassPill(
     modifier: Modifier = Modifier,
     height: Dp = 56.dp,
     hazeState: HazeState? = LocalHazeState.current,
+    /** Solid ground under the glass, for a pill over something that cannot be blurred (a web view): its text must not show through. */
+    opaque: Boolean = false,
     content: @Composable RowScope.() -> Unit,
 ) {
     Row(
         modifier
             .height(height)
-            .glass(CircleShape, GlassKind.Chrome, elevation = 10.dp, hazeState = hazeState)
+            .glass(CircleShape, GlassKind.Chrome, elevation = 10.dp, hazeState = hazeState, opaque = opaque)
             .padding(horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
