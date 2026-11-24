@@ -116,12 +116,14 @@ fun Modifier.glass(
     hazeState: HazeState? = LocalHazeState.current,
     // Solid ground under the translucent fill, for buttons that float over the content of a message.
     opaque: Boolean = false,
+    // A floor of opacity: a fill of surface with this alpha under the glass, so it never gets clearer than that (a pill over a web view).
+    floor: Float = 0f,
 ): Modifier {
     val glass = LocalGlass.current
     val blurred = hazeState != null
     val fill = glass.fill(kind, blurred)
     val skin = LocalSkin.current
-    if (skin.skin != Skin.GLASS) return skinSurface(skin, skin.shape(shape), fill, kind, elevation, glass.shadow, if (opaque) MaterialTheme.colorScheme.surface else null)
+    if (skin.skin != Skin.GLASS) return skinSurface(skin, skin.shape(shape), fill, kind, elevation, glass.shadow, if (opaque) MaterialTheme.colorScheme.surface else if (floor > 0f) MaterialTheme.colorScheme.surface.copy(alpha = floor) else null)
     var m = this
     if (skin.lift) {
         // "3D" glass (Appearance → 3D shadow): a soft shadow that lifts the slab off the background.
@@ -130,7 +132,7 @@ fun Modifier.glass(
         m = m.softShadow(shape, glass.shadow, Elevation.layersFor(elevation))
     }
     m = m.clip(shape)
-    if (opaque) m = m.background(MaterialTheme.colorScheme.surface)
+    if (opaque) m = m.background(MaterialTheme.colorScheme.surface) else if (floor > 0f) m = m.background(MaterialTheme.colorScheme.surface.copy(alpha = floor))
     m = if (hazeState != null && GlassTokens.blurSupported && !GlassTokens.isSolid(glass.transparency)) {
         m.hazeBlur(
             input = HazeInput.Sources(hazeState),
@@ -320,14 +322,14 @@ fun GlassPill(
     modifier: Modifier = Modifier,
     height: Dp = 56.dp,
     hazeState: HazeState? = LocalHazeState.current,
-    /** Solid ground under the glass, for a pill over something that cannot be blurred (a web view): its text must not show through. */
-    opaque: Boolean = false,
+    /** Opacity floor under the glass (alpha of surface, 0 = none), for a pill over something that cannot be blurred (a web view): its text must not show through. */
+    floor: Float = 0f,
     content: @Composable RowScope.() -> Unit,
 ) {
     Row(
         modifier
             .height(height)
-            .glass(CircleShape, GlassKind.Chrome, elevation = 10.dp, hazeState = hazeState, opaque = opaque)
+            .glass(CircleShape, GlassKind.Chrome, elevation = 10.dp, hazeState = hazeState, floor = floor)
             .padding(horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
